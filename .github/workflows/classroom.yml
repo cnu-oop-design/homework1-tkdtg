@@ -1,0 +1,35 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+    - name: Test1-1
+      id: test1-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Test1-1
+        setup-command: "/bin/bash test1.sh"
+        command: cat Test/output1.txt
+        input: ''
+        expected-output: |-
+          Hello, OOP!
+          C++ is ready.
+        comparison-method: contains
+        timeout: 10
+        max-score: 100
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TEST1-1_RESULTS: "${{steps.test1-1.outputs.result}}"
+      with:
+        runners: test1-1
