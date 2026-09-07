@@ -1,0 +1,16 @@
+# 빌드 산출물
+main
+main.exe
+*.o
+*.obj
+*.out
+Test/output1.txt
+
+# IDE / 에디터
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
